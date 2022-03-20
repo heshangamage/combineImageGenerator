@@ -18,7 +18,10 @@ const url2 = `https://cataas.com/cat/says/${params.who}?width=${params.width}&he
 async function combinedImageGen(url1, url2) {
     try {
         async function imageBufferGen(url) {
-            const response = await axios(url, { responseType: 'arraybuffer' })
+            const response = await axios(url, { responseType: 'arraybuffer' }).catch((error) => {
+                console.log(error);
+                throw new Error("error occured when calling image get API");
+            })
             const buffer = Buffer.from(response.data, 'binary')
             return buffer
         }
